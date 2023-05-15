@@ -1,7 +1,8 @@
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo_mobx/screens/signup/signup_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:xlo_mobx/components/error_box.dart';
 import 'package:xlo_mobx/stores/login_store.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -30,6 +31,13 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
                         Text('Acessar com E-mail:', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.grey[900])),
+                        Observer(builder: (_) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: ErrorBox(
+                                message: loginStore.error,
+                              ));
+                        }),
                         Padding(
                             padding: const EdgeInsets.only(left: 3, bottom: 4, top: 8), child: Text('E-mail', style: TextStyle(color: Colors.grey[800], fontSize: 16, fontWeight: FontWeight.w700))),
                         Observer(builder: (_) {

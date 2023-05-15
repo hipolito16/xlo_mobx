@@ -1,11 +1,14 @@
 import 'package:xlo_mobx/components/custom_drawer/page_tile.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class PageSection extends StatelessWidget {
   PageSection({super.key});
 
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
   final PageStore pageStore = GetIt.I<PageStore>();
 
   @override
@@ -52,6 +55,21 @@ class PageSection extends StatelessWidget {
           },
           highlighted: pageStore.page == 4,
         ),
+          Observer(
+            builder: (_) {
+              return Visibility(
+                visible: userManagerStore.isLoggedIn,
+                child: PageTile(
+                  label: 'Sair',
+                  iconData: Icons.exit_to_app,
+                  onTap: () {
+                    userManagerStore.logout();
+                  },
+                  highlighted: false,
+                ),
+              );
+            }
+          ),
       ],
     );
   }

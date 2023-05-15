@@ -1,4 +1,5 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +7,14 @@ import 'package:get_it/get_it.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeParse();
+  await initializeParse();
   setupLocators();
   runApp(const MyApp());
 }
 
 void setupLocators() {
   GetIt.I.registerSingleton(PageStore());
+  GetIt.I.registerSingleton(UserManagerStore());
 }
 
 Future<void> initializeParse() async {
