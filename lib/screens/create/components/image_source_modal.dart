@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ImageSourceModal extends StatelessWidget {
-  const ImageSourceModal({Key? key}) : super(key: key);
+  const ImageSourceModal(this.onImageSelected, {Key? key}) : super(key: key);
+
+  final Function(File) onImageSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +20,11 @@ class ImageSourceModal extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextButton(
-              onPressed: () {
-                getFromCamera();
-              },
+              onPressed: getFromCamera,
               child: const Text('Câmera'),
             ),
             TextButton(
-              onPressed: () {
-                getFromGallery();
-              },
+              onPressed: getFromGallery,
               child: const Text('Galeria'),
             ),
           ],
@@ -35,9 +35,7 @@ class ImageSourceModal extends StatelessWidget {
         title: const Text('Selecionar foto para o anúncio'),
         message: const Text('Escolha a origem da foto'),
         cancelButton: CupertinoActionSheetAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: Navigator.of(context).pop,
           child: const Text('Cancelar',
               style: TextStyle(
                 color: Colors.red,
@@ -45,15 +43,11 @@ class ImageSourceModal extends StatelessWidget {
         ),
         actions: [
           CupertinoActionSheetAction(
-            onPressed: () {
-              getFromCamera();
-            },
+            onPressed: getFromCamera,
             child: const Text('Câmera'),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {
-              getFromGallery();
-            },
+            onPressed: getFromGallery,
             child: const Text('Galeria'),
           ),
         ],
@@ -61,7 +55,22 @@ class ImageSourceModal extends StatelessWidget {
     }
   }
 
-  void getFromCamera() {}
+  Future<void> getFromCamera() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile == null) return;
+    imageSelected(File(pickedFile.path));
+  }
 
-  void getFromGallery() {}
+  Future<void> getFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+    imageSelected(File(pickedFile.path));
+  }
+
+  Future<void> imageSelected(File image) async {
+    final croppedFile = await ImageCropper().cropImage(sourcePath: image.path, aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0), uiSettings: [AndroidUiSettings(toolbarTitle: 'Editar Imagem', toolbarColor: Colors.purple, toolbarWidgetColor: Colors.white), IOSUiSettings(title: 'Editar Imagem', cancelButtonTitle: 'Cancelar', doneButtonTitle: 'Concluir')]);
+    if (croppedFile == null) return;
+    final file = File(croppedFile.path);
+    onImageSelected(file);
+  }
 }

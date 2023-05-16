@@ -1,11 +1,14 @@
 import 'package:xlo_mobx/screens/create/components/images_field.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
+import 'package:xlo_mobx/stores/create_store.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class CreateScreen extends StatelessWidget {
-  const CreateScreen({Key? key}) : super(key: key);
+  CreateScreen({Key? key}) : super(key: key);
+
+  final CreateStore createStore = CreateStore();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class CreateScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const ImagesField(),
+              ImagesField(createStore),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Título *',
