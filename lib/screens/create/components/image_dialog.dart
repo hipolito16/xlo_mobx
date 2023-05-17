@@ -11,20 +11,17 @@ class ImageDialog extends StatelessWidget {
     return Dialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Image.file(image),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop;
+              Navigator.of(context).pop();
               onDelete();
             },
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(
-                color: Colors.red,
-              ),
-            ),
-            child: const Text('Excluir'),
+            child: const Text('Excluir', style: TextStyle(color: Colors.red)),
           ),
+          TextButton(onPressed: Navigator.of(context).pop, child: const Text('Cancelar')),
         ],
       ),
     );

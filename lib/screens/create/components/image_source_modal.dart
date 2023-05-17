@@ -27,6 +27,7 @@ class ImageSourceModal extends StatelessWidget {
               onPressed: getFromGallery,
               child: const Text('Galeria'),
             ),
+            TextButton(onPressed: Navigator.of(context).pop, child: const Text('Cancelar')),
           ],
         ),
       );

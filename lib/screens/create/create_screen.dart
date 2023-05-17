@@ -26,41 +26,43 @@ class CreateScreen extends StatelessWidget {
           title: const Text('Criar Anúncio'),
           centerTitle: true,
         ),
-        body: Card(
-          clipBehavior: Clip.antiAlias,
-          elevation: 8,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ImagesField(createStore),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Título *',
-                  labelStyle: labelStyle,
-                  contentPadding: contentPadding,
+        body: SingleChildScrollView(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            elevation: 8,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ImagesField(createStore),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Título *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                  ),
                 ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Descrição *',
-                  labelStyle: labelStyle,
-                  contentPadding: contentPadding,
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Descrição *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                  ),
+                  maxLines: null,
                 ),
-                maxLines: null,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Preço *',
-                  labelStyle: labelStyle,
-                  contentPadding: contentPadding,
-                  prefixText: 'R\$ ',
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Preço *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                    prefixText: 'R\$ ',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter()],
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter()],
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }

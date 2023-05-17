@@ -15,7 +15,7 @@ class ImagesField extends StatelessWidget {
   Widget build(BuildContext context) {
     void onImageSelected(File image) {
       createStore.images.add(image);
-      Navigator.of(context).pop;
+      Navigator.of(context).pop();
     }
 
     return Container(
