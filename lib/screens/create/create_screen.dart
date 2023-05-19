@@ -1,6 +1,7 @@
 import 'package:xlo_mobx/screens/create/components/category_field.dart';
-import 'package:xlo_mobx/screens/create/components/images_field.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
+import 'package:xlo_mobx/screens/create/components/images_field.dart';
+import 'package:xlo_mobx/screens/create/components/cep_field.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +53,7 @@ class CreateScreen extends StatelessWidget {
                   ),
                   maxLines: null,
                 ),
+                CepField(createStore),
                 CategoryField(createStore),
                 TextFormField(
                   decoration: const InputDecoration(

@@ -24,9 +24,9 @@ class CepRepository {
 
         final ufList = await IBGERepository().getUFListFromApi();
         return Address(
-          cep: response.data!['cep'],
-          district: response.data!['bairro'],
-          city: City(nome: response.data!['localidade']),
+          cep: response.data!['cep'] ?? '',
+          bairro: response.data!['bairro'] ?? '',
+          cidade: City(nome: response.data!['localidade'] ?? ''),
           uf: ufList!.firstWhere((uf) => uf.sigla == response.data!['uf']),
         );
       });
