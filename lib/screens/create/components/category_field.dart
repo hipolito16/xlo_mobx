@@ -14,7 +14,7 @@ class CategoryField extends StatelessWidget {
       return Column(
         children: [
           DropdownButtonFormField(
-            items: createStore.categories!.map((value) {
+            items: createStore.categories.map((value) {
               return DropdownMenuItem(
                 value: value,
                 child: Text(value.description!),

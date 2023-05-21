@@ -1,4 +1,3 @@
-import 'package:xlo_mobx/screens/category/category_screen.dart';
 import 'package:xlo_mobx/screens/create/create_screen.dart';
 import 'package:xlo_mobx/screens/home/home_screen.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
@@ -32,11 +31,11 @@ class _BaseScreenState extends State<BaseScreen> {
       controller: pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        const HomeScreen(),
-        CreateScreen(),
+        HomeScreen(),
+        const CreateScreen(),
         Container(color: Colors.yellow),
         Container(color: Colors.purple),
-        CategoryScreen(),
+        Container(color: Colors.brown),
       ],
     ));
   }

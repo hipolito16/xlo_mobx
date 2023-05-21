@@ -85,6 +85,12 @@ mixin _$CreateStore on _CreateStore, Store {
           () => super.categoriaError,
           name: '_CreateStore.categoriaError'))
       .value;
+  Computed<num?>? _$precoComputed;
+
+  @override
+  num? get preco => (_$precoComputed ??=
+          Computed<num?>(() => super.preco, name: '_CreateStore.preco'))
+      .value;
   Computed<bool>? _$precoValidComputed;
 
   @override
@@ -98,6 +104,13 @@ mixin _$CreateStore on _CreateStore, Store {
   String? get precoError =>
       (_$precoErrorComputed ??= Computed<String?>(() => super.precoError,
               name: '_CreateStore.precoError'))
+          .value;
+  Computed<bool>? _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_CreateStore.isFormValid'))
           .value;
 
   late final _$tituloAtom = Atom(name: '_CreateStore.titulo', context: context);
@@ -151,13 +164,13 @@ mixin _$CreateStore on _CreateStore, Store {
       Atom(name: '_CreateStore.categories', context: context);
 
   @override
-  List<Category>? get categories {
+  List<Category> get categories {
     _$categoriesAtom.reportRead();
     return super.categories;
   }
 
   @override
-  set categories(List<Category>? value) {
+  set categories(List<Category> value) {
     _$categoriesAtom.reportWrite(value, super.categories, () {
       super.categories = value;
     });
@@ -179,18 +192,19 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
-  late final _$precoAtom = Atom(name: '_CreateStore.preco', context: context);
+  late final _$precoTextAtom =
+      Atom(name: '_CreateStore.precoText', context: context);
 
   @override
-  String? get preco {
-    _$precoAtom.reportRead();
-    return super.preco;
+  String? get precoText {
+    _$precoTextAtom.reportRead();
+    return super.precoText;
   }
 
   @override
-  set preco(String? value) {
-    _$precoAtom.reportWrite(value, super.preco, () {
-      super.preco = value;
+  set precoText(String? value) {
+    _$precoTextAtom.reportWrite(value, super.precoText, () {
+      super.precoText = value;
     });
   }
 
@@ -210,6 +224,53 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
+  late final _$loadingAtom =
+      Atom(name: '_CreateStore.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  late final _$errorAtom = Atom(name: '_CreateStore.error', context: context);
+
+  @override
+  String? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
+  late final _$savedAdAtom =
+      Atom(name: '_CreateStore.savedAd', context: context);
+
+  @override
+  bool get savedAd {
+    _$savedAdAtom.reportRead();
+    return super.savedAd;
+  }
+
+  @override
+  set savedAd(bool value) {
+    _$savedAdAtom.reportWrite(value, super.savedAd, () {
+      super.savedAd = value;
+    });
+  }
+
   late final _$showErrorsAtom =
       Atom(name: '_CreateStore.showErrors', context: context);
 
@@ -224,6 +285,14 @@ mixin _$CreateStore on _CreateStore, Store {
     _$showErrorsAtom.reportWrite(value, super.showErrors, () {
       super.showErrors = value;
     });
+  }
+
+  late final _$submitAsyncAction =
+      AsyncAction('_CreateStore.submit', context: context);
+
+  @override
+  Future<void> submit() {
+    return _$submitAsyncAction.run(() => super.submit());
   }
 
   late final _$_CreateStoreActionController =
@@ -285,6 +354,17 @@ mixin _$CreateStore on _CreateStore, Store {
   }
 
   @override
+  void invalidSubmit() {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.invalidSubmit');
+    try {
+      return super.invalidSubmit();
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 titulo: ${titulo},
@@ -292,8 +372,11 @@ descricao: ${descricao},
 cepStore: ${cepStore},
 categories: ${categories},
 categoria: ${categoria},
-preco: ${preco},
+precoText: ${precoText},
 hidePhone: ${hidePhone},
+loading: ${loading},
+error: ${error},
+savedAd: ${savedAd},
 showErrors: ${showErrors},
 imagesValid: ${imagesValid},
 imagesError: ${imagesError},
@@ -306,8 +389,10 @@ addressValid: ${addressValid},
 addressError: ${addressError},
 categoriaValid: ${categoriaValid},
 categoriaError: ${categoriaError},
+preco: ${preco},
 precoValid: ${precoValid},
-precoError: ${precoError}
+precoError: ${precoError},
+isFormValid: ${isFormValid}
     ''';
   }
 }

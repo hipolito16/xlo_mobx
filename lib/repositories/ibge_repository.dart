@@ -6,7 +6,7 @@ import 'package:xlo_mobx/models/uf.dart';
 import 'package:dio/dio.dart';
 
 class IBGERepository {
-  Future<List<UF>> getUFList() async {
+  Future<List<UF>> getUFListFromApi() async {
     final preferences = await SharedPreferences.getInstance();
 
     if (preferences.containsKey('UF_LIST')) {
@@ -34,9 +34,7 @@ class IBGERepository {
     try {
       final response = await Dio().get<List>(endpoint);
 
-      final cityList = response.data!.map<City>((e) => City.fromJson(e)).toList()..sort((a, b) => a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
-
-      return cityList;
+      return response.data!.map<City>((e) => City.fromJson(e)).toList()..sort((a, b) => a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
     } on DioError {
       return Future.error('Falha ao obter lista de Cidades');
     }

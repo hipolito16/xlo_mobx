@@ -1,15 +1,16 @@
-import 'package:xlo_mobx/stores/category_store.dart';
-import 'package:xlo_mobx/components/error_box.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:xlo_mobx/models/category.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:xlo_mobx/components/error_box.dart';
+import 'package:xlo_mobx/models/category.dart';
+import 'package:xlo_mobx/screens/category/custom_divider.dart';
+import 'package:xlo_mobx/stores/category_store.dart';
 
 class CategoryScreen extends StatelessWidget {
-  CategoryScreen({this.showAll = true, this.selected, Key? key}) : super(key: key);
+  CategoryScreen({this.showAll = false, this.selected, super.key});
 
-  final bool showAll;
   final Category? selected;
+  final bool showAll;
 
   final CategoryStore categoryStore = GetIt.I<CategoryStore>();
 
@@ -18,33 +19,34 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
-        centerTitle: true,
       ),
       body: Center(
         child: Card(
           margin: const EdgeInsets.fromLTRB(32, 12, 32, 32),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           elevation: 8,
           child: Observer(builder: (_) {
             if (categoryStore.error != null) {
               return ErrorBox(
-                message: categoryStore.error!,
+                message: categoryStore.error,
               );
             } else if (categoryStore.categoryList.isEmpty) {
               return const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Colors.purple),
-                ),
+                child: CircularProgressIndicator(),
               );
             } else {
               final categories = showAll ? categoryStore.allCategoryList : categoryStore.categoryList;
+
               return ListView.separated(
                 itemCount: categories.length,
                 separatorBuilder: (_, __) {
-                  return const Divider(height: 0.1, color: Colors.grey);
+                  return const CustomDivider(altura: 0.6, cor: Colors.grey);
                 },
                 itemBuilder: (_, index) {
                   final category = categories[index];
+
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).pop(category);

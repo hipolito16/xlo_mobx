@@ -19,7 +19,7 @@ class CepRepository {
         return Future.error('CEP Inválido');
       }
 
-      final ufList = await IBGERepository().getUFList();
+      final ufList = await IBGERepository().getUFListFromApi();
 
       return Address(
         cep: response.data!['cep'],

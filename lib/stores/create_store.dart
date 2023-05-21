@@ -1,9 +1,13 @@
 import 'dart:io';
 
-import 'package:xlo_mobx/repositories/category_repository.dart';
+import 'package:xlo_mobx/repositories/ad_repository.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
+import 'package:xlo_mobx/stores/category_store.dart';
 import 'package:xlo_mobx/stores/cep_store.dart';
 import 'package:xlo_mobx/models/category.dart';
 import 'package:xlo_mobx/models/address.dart';
+import 'package:xlo_mobx/models/ad.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'create_store.g.dart';
@@ -11,10 +15,6 @@ part 'create_store.g.dart';
 class CreateStore = _CreateStore with _$CreateStore;
 
 abstract class _CreateStore with Store {
-  _CreateStore() {
-    init();
-  }
-
   ObservableList<File> images = ObservableList<File>();
 
   @computed
@@ -42,8 +42,8 @@ abstract class _CreateStore with Store {
   String? get tituloError {
     if (!showErrors || tituloValid) {
       return null;
-    } else if (titulo!.isEmpty) {
-      return 'Campo obrigatório';
+    } else if (titulo == null) {
+      return 'Campo título obrigatório';
     } else {
       return 'Título muito curto';
     }
@@ -62,8 +62,8 @@ abstract class _CreateStore with Store {
   String? get descricaoError {
     if (!showErrors || descricaoValid) {
       return null;
-    } else if (descricao!.isEmpty) {
-      return 'Campo obrigatório';
+    } else if (descricao == null) {
+      return 'Campo descrição obrigatório';
     } else {
       return 'Descrição muito curta';
     }
@@ -83,16 +83,12 @@ abstract class _CreateStore with Store {
     if (!showErrors || addressValid) {
       return null;
     } else {
-      return 'Campo obrigatório';
+      return 'Campo CEP obrigatório';
     }
   }
 
-  Future<void> init() async {
-    categories = await CategoryRepository().getList();
-  }
-
   @observable
-  List<Category>? categories;
+  List<Category> categories = GetIt.I<CategoryStore>().categoryList;
 
   @observable
   Category? categoria;
@@ -108,25 +104,36 @@ abstract class _CreateStore with Store {
     if (!showErrors || categoriaValid) {
       return null;
     } else {
-      return 'Campo obrigatório';
+      return 'Campo categoria obrigatório';
     }
   }
 
   @observable
-  String? preco;
+  String? precoText;
 
   @action
-  void setPreco(String value) => preco = value;
+  void setPreco(String value) => precoText = value;
 
   @computed
-  bool get precoValid => preco != null && num.tryParse(preco!) != null;
+  num? get preco {
+    if (precoText == null) {
+      return null;
+    } else if (precoText!.contains(',')) {
+      return num.tryParse(precoText!.replaceAll(RegExp('[^0-9]'), ''))! / 100;
+    } else {
+      return num.tryParse(precoText!);
+    }
+  }
+
+  @computed
+  bool get precoValid => preco != null && preco! <= 9999999;
 
   @computed
   String? get precoError {
     if (!showErrors || precoValid) {
       return null;
-    } else if (preco!.isEmpty) {
-      return 'Campo obrigatório';
+    } else if (preco == null) {
+      return 'Campo preço obrigatório';
     } else {
       return 'Preço inválido';
     }
@@ -138,6 +145,44 @@ abstract class _CreateStore with Store {
   @action
   void setHidePhone(bool? value) => hidePhone = value ?? false;
 
+  @computed
+  bool get isFormValid => imagesValid && tituloValid && descricaoValid && addressValid && categoriaValid && precoValid;
+
+  @observable
+  bool loading = false;
+
+  @observable
+  String? error;
+
+  @action
+  Future<void> submit() async {
+    final ad = Ad(
+      images: images,
+      titulo: titulo,
+      descricao: descricao,
+      address: address,
+      categoria: categoria,
+      preco: preco,
+      hidePhone: hidePhone,
+      user: GetIt.I<UserManagerStore>().user,
+    );
+
+    loading = true;
+    try {
+      await AdRepository().save(ad);
+      savedAd = true;
+    } catch (e) {
+      error = e as String;
+    }
+    loading = false;
+  }
+
+  @observable
+  bool savedAd = false;
+
   @observable
   bool showErrors = false;
+
+  @action
+  void invalidSubmit() => showErrors = true;
 }

@@ -14,21 +14,10 @@ class UserRepository {
     final response = await parseUser.signUp();
 
     if (response.success) {
-      return mapParseToUser(response.result);
+      return User.fromParse(response.result);
     } else {
       return Future.error(ParseErrors.getDescription(response.error!.code)!);
     }
-  }
-
-  User mapParseToUser(ParseUser parseUser) {
-    return User(
-      id: parseUser.objectId!,
-      name: parseUser.get(keyUserName)!,
-      email: parseUser.get(keyUserEmail)!,
-      phone: parseUser.get(keyUserPhone)!,
-      type: Type.values[parseUser.get(keyType)!],
-      createdAt: parseUser.get(keyUserCreatedAt),
-    );
   }
 
   Future<User> loginWithEmail(String email, String password) async {
@@ -37,7 +26,7 @@ class UserRepository {
     final response = await parseUser.login();
 
     if (response.success) {
-      return mapParseToUser(response.result);
+      return User.fromParse(response.result);
     } else {
       return Future.error(ParseErrors.getDescription(response.error!.code)!);
     }
@@ -50,7 +39,7 @@ class UserRepository {
       final response = await ParseUser.getCurrentUserFromServer(parseUser.sessionToken!);
 
       if (response!.success) {
-        return mapParseToUser(response.result);
+        return User.fromParse(response.result);
       } else {
         await parseUser.logout();
       }
