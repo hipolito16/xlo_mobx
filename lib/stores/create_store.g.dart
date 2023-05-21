@@ -9,6 +9,48 @@ part of 'create_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CreateStore on _CreateStore, Store {
+  Computed<bool>? _$imagesValidComputed;
+
+  @override
+  bool get imagesValid =>
+      (_$imagesValidComputed ??= Computed<bool>(() => super.imagesValid,
+              name: '_CreateStore.imagesValid'))
+          .value;
+  Computed<String?>? _$imagesErrorComputed;
+
+  @override
+  String? get imagesError =>
+      (_$imagesErrorComputed ??= Computed<String?>(() => super.imagesError,
+              name: '_CreateStore.imagesError'))
+          .value;
+  Computed<bool>? _$tituloValidComputed;
+
+  @override
+  bool get tituloValid =>
+      (_$tituloValidComputed ??= Computed<bool>(() => super.tituloValid,
+              name: '_CreateStore.tituloValid'))
+          .value;
+  Computed<String?>? _$tituloErrorComputed;
+
+  @override
+  String? get tituloError =>
+      (_$tituloErrorComputed ??= Computed<String?>(() => super.tituloError,
+              name: '_CreateStore.tituloError'))
+          .value;
+  Computed<bool>? _$descricaoValidComputed;
+
+  @override
+  bool get descricaoValid =>
+      (_$descricaoValidComputed ??= Computed<bool>(() => super.descricaoValid,
+              name: '_CreateStore.descricaoValid'))
+          .value;
+  Computed<String?>? _$descricaoErrorComputed;
+
+  @override
+  String? get descricaoError => (_$descricaoErrorComputed ??= Computed<String?>(
+          () => super.descricaoError,
+          name: '_CreateStore.descricaoError'))
+      .value;
   Computed<Address?>? _$addressComputed;
 
   @override
@@ -29,6 +71,65 @@ mixin _$CreateStore on _CreateStore, Store {
       (_$addressErrorComputed ??= Computed<String?>(() => super.addressError,
               name: '_CreateStore.addressError'))
           .value;
+  Computed<bool>? _$categoriaValidComputed;
+
+  @override
+  bool get categoriaValid =>
+      (_$categoriaValidComputed ??= Computed<bool>(() => super.categoriaValid,
+              name: '_CreateStore.categoriaValid'))
+          .value;
+  Computed<String?>? _$categoriaErrorComputed;
+
+  @override
+  String? get categoriaError => (_$categoriaErrorComputed ??= Computed<String?>(
+          () => super.categoriaError,
+          name: '_CreateStore.categoriaError'))
+      .value;
+  Computed<bool>? _$precoValidComputed;
+
+  @override
+  bool get precoValid =>
+      (_$precoValidComputed ??= Computed<bool>(() => super.precoValid,
+              name: '_CreateStore.precoValid'))
+          .value;
+  Computed<String?>? _$precoErrorComputed;
+
+  @override
+  String? get precoError =>
+      (_$precoErrorComputed ??= Computed<String?>(() => super.precoError,
+              name: '_CreateStore.precoError'))
+          .value;
+
+  late final _$tituloAtom = Atom(name: '_CreateStore.titulo', context: context);
+
+  @override
+  String? get titulo {
+    _$tituloAtom.reportRead();
+    return super.titulo;
+  }
+
+  @override
+  set titulo(String? value) {
+    _$tituloAtom.reportWrite(value, super.titulo, () {
+      super.titulo = value;
+    });
+  }
+
+  late final _$descricaoAtom =
+      Atom(name: '_CreateStore.descricao', context: context);
+
+  @override
+  String? get descricao {
+    _$descricaoAtom.reportRead();
+    return super.descricao;
+  }
+
+  @override
+  set descricao(String? value) {
+    _$descricaoAtom.reportWrite(value, super.descricao, () {
+      super.descricao = value;
+    });
+  }
 
   late final _$cepStoreAtom =
       Atom(name: '_CreateStore.cepStore', context: context);
@@ -62,19 +163,50 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
-  late final _$categoryAtom =
-      Atom(name: '_CreateStore.category', context: context);
+  late final _$categoriaAtom =
+      Atom(name: '_CreateStore.categoria', context: context);
 
   @override
-  Category? get category {
-    _$categoryAtom.reportRead();
-    return super.category;
+  Category? get categoria {
+    _$categoriaAtom.reportRead();
+    return super.categoria;
   }
 
   @override
-  set category(Category? value) {
-    _$categoryAtom.reportWrite(value, super.category, () {
-      super.category = value;
+  set categoria(Category? value) {
+    _$categoriaAtom.reportWrite(value, super.categoria, () {
+      super.categoria = value;
+    });
+  }
+
+  late final _$precoAtom = Atom(name: '_CreateStore.preco', context: context);
+
+  @override
+  String? get preco {
+    _$precoAtom.reportRead();
+    return super.preco;
+  }
+
+  @override
+  set preco(String? value) {
+    _$precoAtom.reportWrite(value, super.preco, () {
+      super.preco = value;
+    });
+  }
+
+  late final _$hidePhoneAtom =
+      Atom(name: '_CreateStore.hidePhone', context: context);
+
+  @override
+  bool get hidePhone {
+    _$hidePhoneAtom.reportRead();
+    return super.hidePhone;
+  }
+
+  @override
+  set hidePhone(bool value) {
+    _$hidePhoneAtom.reportWrite(value, super.hidePhone, () {
+      super.hidePhone = value;
     });
   }
 
@@ -98,11 +230,55 @@ mixin _$CreateStore on _CreateStore, Store {
       ActionController(name: '_CreateStore', context: context);
 
   @override
-  void setCategory(Category value) {
+  void setTitulo(String value) {
     final _$actionInfo = _$_CreateStoreActionController.startAction(
-        name: '_CreateStore.setCategory');
+        name: '_CreateStore.setTitulo');
     try {
-      return super.setCategory(value);
+      return super.setTitulo(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDescricao(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setDescricao');
+    try {
+      return super.setDescricao(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCategoria(Category value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setCategoria');
+    try {
+      return super.setCategoria(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPreco(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setPreco');
+    try {
+      return super.setPreco(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setHidePhone(bool? value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setHidePhone');
+    try {
+      return super.setHidePhone(value);
     } finally {
       _$_CreateStoreActionController.endAction(_$actionInfo);
     }
@@ -111,13 +287,27 @@ mixin _$CreateStore on _CreateStore, Store {
   @override
   String toString() {
     return '''
+titulo: ${titulo},
+descricao: ${descricao},
 cepStore: ${cepStore},
 categories: ${categories},
-category: ${category},
+categoria: ${categoria},
+preco: ${preco},
+hidePhone: ${hidePhone},
 showErrors: ${showErrors},
+imagesValid: ${imagesValid},
+imagesError: ${imagesError},
+tituloValid: ${tituloValid},
+tituloError: ${tituloError},
+descricaoValid: ${descricaoValid},
+descricaoError: ${descricaoError},
 address: ${address},
 addressValid: ${addressValid},
-addressError: ${addressError}
+addressError: ${addressError},
+categoriaValid: ${categoriaValid},
+categoriaError: ${categoriaError},
+precoValid: ${precoValid},
+precoError: ${precoError}
     ''';
   }
 }

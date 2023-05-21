@@ -16,24 +16,27 @@ class CepField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextFormField(
-          initialValue: cepStore.cep,
-          onChanged: cepStore.setCep,
-          keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            CepInputFormatter(),
-          ],
-          decoration: const InputDecoration(
-            labelText: 'CEP *',
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Colors.grey,
-              fontSize: 18,
+        Observer(builder: (_) {
+          return TextFormField(
+            initialValue: cepStore.cep,
+            onChanged: cepStore.setCep,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CepInputFormatter(),
+            ],
+            decoration: InputDecoration(
+              errorText: createStore.addressError,
+              labelText: 'CEP *',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.grey,
+                fontSize: 18,
+              ),
+              contentPadding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
             ),
-            contentPadding: EdgeInsets.fromLTRB(16, 10, 12, 10),
-          ),
-        ),
+          );
+        }),
         Observer(builder: (_) {
           if (cepStore.address == null && cepStore.error == null && !cepStore.loading) {
             return Container();
@@ -64,7 +67,7 @@ class CepField extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
               child: Text(
-                'Localização: ${address.bairro}, ${address.cidade!.nome} - ${address.uf!.sigla}',
+                'Localização: ${address.bairro != '' ? '${address.bairro}, ' : ''}${address.cidade!.nome} - ${address.uf!.sigla}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
