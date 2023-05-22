@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,32 @@ class ImageSourceModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
+    if (Platform.isWindows) {
+      return FutureBuilder<dynamic>(builder: (context, snapshot) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.15,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: getFromGallery,
+                  child: const Text('Galeria'),
+                ),
+              ),
+              Expanded(
+                  child: TextButton(
+                      onPressed: Navigator.of(context).pop,
+                      child: const Text('Cancelar',
+                          style: TextStyle(
+                            color: Colors.red,
+                          )))),
+            ],
+          ),
+        );
+      });
+    } else if (Platform.isAndroid) {
       return BottomSheet(
         onClosing: () {},
         builder: (_) => Column(
@@ -63,9 +89,18 @@ class ImageSourceModal extends StatelessWidget {
   }
 
   Future<void> getFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile == null) return;
-    imageSelected(File(pickedFile.path));
+    if (Platform.isWindows) {
+      String? path;
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+      path = result?.files.single.path;
+      if (path == null) return;
+      PickedFile pickedFile = PickedFile(path);
+      onImageSelected(File(pickedFile.path));
+    } else {
+      final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedFile == null) return;
+      imageSelected(File(pickedFile.path));
+    }
   }
 
   Future<void> imageSelected(File image) async {
