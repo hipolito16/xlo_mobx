@@ -132,7 +132,7 @@ class SignUpScreen extends StatelessWidget {
                                 ? const CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation(Colors.white),
                                   )
-                                : const Text('Cadastrar'),
+                                : const Text('CADASTRAR'),
                           ));
                     }),
                     const Divider(color: Colors.black),

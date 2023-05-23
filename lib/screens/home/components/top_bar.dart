@@ -1,5 +1,6 @@
 import 'package:xlo_mobx/screens/home/components/bar_button.dart';
 import 'package:xlo_mobx/screens/category/category_screen.dart';
+import 'package:xlo_mobx/screens/filter/filter_screen.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,12 @@ class TopBar extends StatelessWidget {
                 if (categoria != null) homeStore.setCategoria(categoria);
               });
         }),
-        BarButton(label: 'Filtros', boxDecoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[400]!), left: BorderSide(color: Colors.grey[400]!))), onTap: () {}),
+        BarButton(
+            label: 'Filtros',
+            boxDecoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[400]!), left: BorderSide(color: Colors.grey[400]!))),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => FilterScreen()));
+            }),
       ],
     );
   }

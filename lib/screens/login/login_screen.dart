@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                                   textStyle: const TextStyle(fontSize: 18),
                                 ),
-                                child: loginStore.loading ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.white)) : const Text('Entrar'),
+                                child: loginStore.loading ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.white)) : const Text('ENTRAR'),
                               ));
                         }),
                         const Divider(color: Colors.black),
