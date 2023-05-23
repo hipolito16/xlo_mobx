@@ -20,53 +20,55 @@ class FilterScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Card(
-            margin: const EdgeInsets.symmetric(horizontal: 32),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 8,
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    OrderByField(filterStore),
-                    PriceRangeField(filterStore),
-                    VendorTypeField(filterStore),
-                    Observer(builder: (_) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(vertical: 16),
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: filterStore.isFormValid
-                              ? () {
-                                  filterStore.save();
-                                  Navigator.of(context).pop();
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.orange,
-                            disabledBackgroundColor: Colors.orange.withAlpha(120),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
+        child: SingleChildScrollView(
+          child: Card(
+              margin: const EdgeInsets.symmetric(horizontal: 32),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 8,
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      OrderByField(filterStore),
+                      PriceRangeField(filterStore),
+                      VendorTypeField(filterStore),
+                      Observer(builder: (_) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 16),
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: filterStore.isFormValid
+                                ? () {
+                                    filterStore.save();
+                                    Navigator.of(context).pop();
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.orange,
+                              disabledBackgroundColor: Colors.orange.withAlpha(120),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            child: const Text(
+                              'FILTRAR',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                          child: const Text(
-                            'FILTRAR',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
-                ))),
+                        );
+                      }),
+                    ],
+                  ))),
+        ),
       ),
     );
   }
