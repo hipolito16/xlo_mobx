@@ -9,7 +9,7 @@ class UserRepository {
 
     parseUser.set<String>(keyUserName, user.name!);
     parseUser.set<String>(keyUserPhone, user.phone!);
-    parseUser.set(keyType, user.type!.index);
+    parseUser.set(keyUserType, user.type!.index);
 
     final response = await parseUser.signUp();
 
