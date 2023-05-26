@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:xlo_mobx/models/ad.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,24 @@ class AdTile extends StatelessWidget {
                 SizedBox(
                   height: 135,
                   width: 127,
-                  child: Image.network(
-                    ad.images!.first,
+                  child: CachedNetworkImage(
+                    imageUrl: ad.images!.isEmpty ? 'https://static.thenounproject.com/png/194055-200.png' : ad.images!.first,
                     fit: BoxFit.cover,
                   ),
                 ),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(ad.titulo!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      Text('R\$ ${ad.preco}', style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: Colors.purple)),
+                      Text('${ad.createdAt} - ${ad.address!.cidade!.nome} - ${ad.address!.uf!.sigla}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
+                    ],
+                  ),
+                ))
               ],
             )));
   }
