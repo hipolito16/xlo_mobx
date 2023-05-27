@@ -48,6 +48,7 @@ class FilterScreen extends StatelessWidget {
                                   }
                                 : null,
                             style: ElevatedButton.styleFrom(
+                              elevation: 0,
                               foregroundColor: Colors.white,
                               backgroundColor: Colors.orange,
                               disabledBackgroundColor: Colors.orange.withAlpha(120),

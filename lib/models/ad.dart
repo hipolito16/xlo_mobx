@@ -18,7 +18,7 @@ class Ad {
     this.address,
     this.preco,
     this.hidePhone,
-    this.status = AdStatus.PENDING,
+    this.status = AdStatus.ACTIVE,
     this.createdAt,
     this.user,
     this.views = 0,

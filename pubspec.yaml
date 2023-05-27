@@ -27,6 +27,9 @@ dependencies:
   image_size_getter: ^2.1.2
   cached_network_image: ^3.2.3
   intl: ^0.18.0
+  carousel_pro_nullsafety: ^2.0.0
+  readmore: ^2.2.0
+  url_launcher: ^6.1.11
   flutter_localizations:
     sdk: flutter
 

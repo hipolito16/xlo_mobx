@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-import 'package:xlo_mobx/components/error_box.dart';
-import 'package:xlo_mobx/models/category.dart';
-import 'package:xlo_mobx/screens/category/custom_divider.dart';
+import 'package:xlo_mobx/components/custom_divider.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
+import 'package:xlo_mobx/components/error_box.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:xlo_mobx/models/category.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class CategoryScreen extends StatelessWidget {
   CategoryScreen({this.showAll = false, this.selected, super.key});

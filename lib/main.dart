@@ -1,9 +1,11 @@
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -40,6 +42,12 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(elevation: 0),
         textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.orange),
       ),
+      supportedLocales: const [Locale('pt', 'BR')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: const BaseScreen(),
     );
   }
