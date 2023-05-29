@@ -1,5 +1,5 @@
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
@@ -17,10 +17,10 @@ void main() async {
 }
 
 void setupLocators() {
-  GetIt.I.registerSingleton(PageStore());
-  GetIt.I.registerSingleton(HomeStore());
-  GetIt.I.registerSingleton(CategoryStore());
-  GetIt.I.registerSingleton(UserManagerStore());
+  GetIt.I.registerSingleton<PageStore>(PageStore());
+  GetIt.I.registerSingleton<HomeStore>(HomeStore());
+  GetIt.I.registerSingleton<CategoryStore>(CategoryStore());
+  GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
 }
 
 Future<void> initializeParse() async {
@@ -41,6 +41,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.purple,
         appBarTheme: const AppBarTheme(elevation: 0),
         textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.orange),
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        }),
       ),
       supportedLocales: const [Locale('pt', 'BR')],
       localizationsDelegates: const [

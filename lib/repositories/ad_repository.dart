@@ -136,4 +136,42 @@ class AdRepository {
       return Future.error('Falha ao salvar imagens');
     }
   }
+
+  Future<List<Ad>> getMyAds() async {
+    final currentUser = await ParseUser.currentUser();
+    final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
+
+    queryBuilder.setLimit(100);
+    queryBuilder.orderByDescending(keyAdCreatedAt);
+    queryBuilder.whereEqualTo(keyAdOwner, currentUser.toPointer());
+    queryBuilder.includeObject([keyAdCategoria, keyAdOwner]);
+
+    final response = await queryBuilder.query();
+
+    if (response.success && response.results != null) {
+      return response.results!.map((p) => Ad.fromParse(p)).toList();
+    } else if (response.success && response.results == null) {
+      return [];
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code)!);
+    }
+  }
+
+  Future<void> setAdSold(Ad ad) async {
+    final currentUser = await ParseUser.currentUser();
+    final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
+
+    queryBuilder.whereEqualTo(keyAdOwner, currentUser.toPointer());
+    queryBuilder.whereEqualTo(keyAdId, ad.id);
+
+    final response = await queryBuilder.query();
+
+    if (response.success && response.results != null) {
+      final adObject = response.results![0];
+      adObject.set<int>(keyAdStatus, AdStatus.SOLD.index);
+      await adObject.save();
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code)!);
+    }
+  }
 }

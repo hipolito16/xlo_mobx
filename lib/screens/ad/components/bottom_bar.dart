@@ -9,6 +9,7 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (ad.status == AdStatus.PENDING) return Container();
     return Positioned(
       bottom: 0,
       left: 0,
@@ -27,9 +28,9 @@ class BottomBar extends StatelessWidget {
                 if (!ad.hidePhone!)
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       final phone = Uri(scheme: 'tel', path: ad.user!.phone!.replaceAll(RegExp('[^0-9]'), ''));
-                      canLaunchUrl(phone);
+                      await launchUrl(phone);
                     },
                     child: Container(
                       height: 25,
