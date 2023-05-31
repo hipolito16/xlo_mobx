@@ -1,5 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:xlo_mobx/stores/postgres_store.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
@@ -21,6 +22,7 @@ void setupLocators() {
   GetIt.I.registerSingleton<HomeStore>(HomeStore());
   GetIt.I.registerSingleton<CategoryStore>(CategoryStore());
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
+  GetIt.I.registerSingleton<PostgresStore>(PostgresStore());
 }
 
 Future<void> initializeParse() async {
